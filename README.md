@@ -219,3 +219,20 @@ The Streamlit dashboard provides a local fraud monitoring workflow with generate
 ![FraudLens Dashboard](docs/screenshots/Dashboard%20Demo.png)
 
 ![Risk Score Trend](docs/screenshots/Risk%20Score%20Trend.png)
+
+
+
+## Dashboard Demo
+
+
+
+The Streamlit dashboard provides a local fraud monitoring workflow with generated transactions, risk scoring, rule-based explanations, and trend visualization.
+
+
+
+![FraudLens Dashboard](docs/screenshots/Dashboard.png)
+
+
+
+![Risk Score Trend](docs/screenshots/Risk%20Score%20Trend.png)
+
