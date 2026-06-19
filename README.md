@@ -1,6 +1,20 @@
-# FraudLens AI v2 Final — Real-Time Fraud Detection & Investigation Platform
+# Fra# FraudLens AI
 
-FraudLens AI v2 is a GitHub-ready ML engineering portfolio project for detecting suspicious financial transactions in near real time. It combines model training, hybrid fraud scoring, Kafka/Spark streaming design, PostgreSQL alert workflow, MLflow/local registry metadata, SHAP-style explainability, FastAPI services, Streamlit dashboard, Docker Compose, and tests.
+[CI Badge]
+[Python Badge]
+[FastAPI Badge]
+[Streamlit Badge]
+[Kafka Badge]
+[Spark Badge]
+[XGBoost Badge]
+
+Production-style fraud detection platform with:
+- Real-time transaction scoring
+- Kafka event streaming
+- Spark processing
+- XGBoost risk prediction
+- FastAPI serving layer
+- Streamlit monitoring dashboard
 
 ## Why this version is stronger
 
