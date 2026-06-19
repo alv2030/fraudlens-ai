@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+src = ["app", "src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --cov=app --cov=src --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict_optional = true
