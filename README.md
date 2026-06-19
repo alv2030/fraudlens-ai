@@ -211,3 +211,11 @@ FraudLens AI v2 — Real-Time Fraud Detection Platform | Python, Kafka, Spark, X
 ## Scope Note
 
 This is a portfolio-grade local system, not a PCI-compliant banking production system. Real production use requires stronger security, identity/access controls, audit logging, PII governance, drift monitoring, model risk management, and compliance review.
+
+## Dashboard Demo
+
+The Streamlit dashboard provides a local fraud monitoring workflow with generated transactions, risk scoring, rule-based explanations, and trend visualization.
+
+![FraudLens Dashboard](docs/screenshots/Dashboard%20Demo.png)
+
+![Risk Score Trend](docs/screenshots/Risk%20Score%20Trend.png)
