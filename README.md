@@ -1,4 +1,4 @@
-# Fra# FraudLens AI
+# FraudLens AI
 
 [CI Badge]
 [Python Badge]
