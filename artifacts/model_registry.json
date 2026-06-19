@@ -10,5 +10,17 @@
     "mlflow_model_uri": null,
     "mlflow_registered_version": null,
     "registered_at": "2026-06-19T04:19:07.162299+00:00"
+  },
+  {
+    "model_name": "demo_random_forest_seed",
+    "version": 2,
+    "stage": "Production",
+    "metrics": {
+      "demo_seed_model": 1.0
+    },
+    "artifact_path": "/private/var/folders/l4/4jgrhx0n24s84238fg0bhbl80000gn/T/pytest-of-daventech102/pytest-0/test_prediction_bootstraps_dem0/fraud_model.joblib",
+    "mlflow_model_uri": null,
+    "mlflow_registered_version": null,
+    "registered_at": "2026-06-19T22:25:21.646024+00:00"
   }
 ]
