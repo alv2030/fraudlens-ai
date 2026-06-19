@@ -1,0 +1,14 @@
+[
+  {
+    "model_name": "demo_random_forest_seed",
+    "version": 1,
+    "stage": "Production",
+    "metrics": {
+      "demo_seed_model": 1.0
+    },
+    "artifact_path": "/tmp/pytest-of-root/pytest-0/test_prediction_bootstraps_dem0/fraud_model.joblib",
+    "mlflow_model_uri": null,
+    "mlflow_registered_version": null,
+    "registered_at": "2026-06-19T04:19:07.162299+00:00"
+  }
+]
