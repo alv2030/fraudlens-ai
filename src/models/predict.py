@@ -33,7 +33,7 @@ def score_transaction(txn: Dict) -> Dict:
     df = df[features]
     ml_prob = float(model.predict_proba(df)[0, 1])
     rule = calculate_rule_score({**txn, **df.iloc[0].to_dict()})
-    final_score = round((ml_prob * 100 * 0.70) + (rule.score * 0.30), 2)
+    final_score = round((ml_prob * 100 * 0.30) + (rule.score * 0.70), 2)
     explanation = shap_explanation(model, df, rule.reasons)
     return {
         "transaction_id": txn.get("transaction_id"),
