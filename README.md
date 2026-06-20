@@ -1,112 +1,193 @@
 # FraudLens AI
 
-[CI Badge]
-[Python Badge]
-[FastAPI Badge]
-[Streamlit Badge]
-[Kafka Badge]
-[Spark Badge]
-[XGBoost Badge]
+Real-time fraud detection and investigation platform that combines machine learning predictions with rule-based risk signals to identify suspicious transactions and support fraud analyst workflows.
 
-Production-style fraud detection platform with:
-- Real-time transaction scoring
-- Kafka event streaming
-- Spark processing
-- XGBoost risk prediction
-- FastAPI serving layer
-- Streamlit monitoring dashboard
+Built with Python, XGBoost, FastAPI, Streamlit, Kafka, Spark Structured Streaming, PostgreSQL, Docker, and MLflow.
 
-## Why this version is stronger
+---
 
-This v2 final build fixes the main gaps from the earlier versions:
+## Business Problem
 
-- Full project package, not a patch-only update
-- API auto-seeds a demo model if no trained model exists
-- PostgreSQL schema initializes automatically when infrastructure is available
-- Alert workflow persists transactions, predictions, alerts, and status history
-- Spark Structured Streaming job includes a PostgreSQL micro-batch sink path
-- MLflow registry wrapper has local JSON fallback so the repo works without MLflow server
-- Docker Compose includes API, dashboard, MLflow, Kafka, Redis, PostgreSQL, and streaming service
-- Dashboard no longer hard-fails when model is missing
-- Tests cover API, rules, feature engineering, validation, prediction bootstrap, and streaming batch scoring
+Financial institutions process millions of transactions every day. Traditional rule-based fraud systems often generate excessive false positives, while machine learning models can be difficult for investigators to interpret.
 
-## Architecture
+FraudLens AI demonstrates a hybrid approach that combines machine learning predictions, behavioral risk features, and fraud detection rules to:
+
+* Detect suspicious transactions
+* Prioritize high-risk alerts
+* Support analyst investigation workflows
+* Provide explainable fraud decisions
+
+---
+
+## Dashboard Demo
+
+### Executive Overview
+
+![Executive Overview](docs/screenshots/dashboard.png)
+
+### Customer Risk Profile
+
+![Customer Risk Profile](docs/screenshots/customer-risk-profile.png)
+
+### Risk Trend Monitoring
+
+![Risk Score Trend](docs/screenshots/risk-score-trend.png)
+
+### Alert Investigation
+
+![Alert Investigation](docs/screenshots/alert-investigation.png)
+
+### Highest Risk Customers
+
+![Top Risk Customers](docs/screenshots/top-10-risk-customers.png)
+The Streamlit dashboard supports transaction monitoring, customer risk segmentation, alert investigation, and fraud analyst workflows.
+
+---
+
+## System Architecture
+
+![FraudLens Architecture](docs/architecture.png)
+
+### End-to-End Workflow
+
+1. Generate or ingest transactions.
+2. Publish transaction events through Kafka.
+3. Process transactions using Spark Structured Streaming.
+4. Apply feature engineering and behavioral risk enrichment.
+5. Score transactions using machine learning and fraud rules.
+6. Store transactions, predictions, and alerts in PostgreSQL.
+7. Surface results through FastAPI services and Streamlit dashboards.
+
+---
+
+## Fraud Scoring Framework
+
+FraudLens uses a hybrid scoring approach:
 
 ```text
-Historical Fraud Dataset / Demo Generator
-        ↓
-Data Validation + Feature Engineering
-        ↓
-Model Training + Threshold Strategy
-        ↓
-MLflow Tracking + Local Model Registry
-        ↓
-Production Model Artifact
-
-Transaction Simulator / Kafka Producer
-        ↓
-Kafka Topic: transactions
-        ↓
-Spark Structured Streaming Micro-Batches
-        ↓
-ML Model + Rule Engine
-        ↓
-SHAP-style Explanation
-        ↓
-PostgreSQL: Transactions, Predictions, Alerts, Status History
-        ↓
-FastAPI + Streamlit Investigator Dashboard
+Final Risk Score =
+70% Machine Learning Probability
++
+30% Rule-Based Fraud Signals
 ```
 
-## Tech Stack
+Rule signals include:
 
-| Layer | Tools |
-|---|---|
-| Language | Python |
-| ML | Scikit-Learn, XGBoost, SHAP, MLflow |
-| Streaming | Kafka, Spark Structured Streaming |
-| Storage | PostgreSQL, Redis |
-| API | FastAPI, Pydantic |
-| Dashboard | Streamlit, Plotly |
-| DevOps | Docker, Docker Compose, Pytest, GitHub Actions |
+* Transaction amount deviation from customer baseline
+* Foreign transactions
+* New device usage
+* Card-not-present activity
+* High-risk merchant categories
+* High transaction velocity
+
+---
+
+## Technology Stack
+
+| Layer            | Technologies                                   |
+| ---------------- | ---------------------------------------------- |
+| Language         | Python                                         |
+| Machine Learning | Scikit-Learn, XGBoost, SHAP, MLflow            |
+| Streaming        | Kafka, Spark Structured Streaming              |
+| Storage          | PostgreSQL, Redis                              |
+| API              | FastAPI, Pydantic                              |
+| Dashboard        | Streamlit, Plotly                              |
+| DevOps           | Docker, Docker Compose, Pytest, GitHub Actions |
+
+---
 
 ## Project Structure
 
 ```text
-fraudlens-ai-v2-final/
-├── Dockerfile.api
-├── Dockerfile.dashboard
-├── Dockerfile.streaming
-├── docker-compose.yml
-├── Makefile
-├── README.md
-├── requirements.txt
-├── src/
-│   ├── api/          # FastAPI scoring, admin bootstrap, alert workflow APIs
-│   ├── dashboard/    # Streamlit investigator dashboard
-│   ├── data/         # data generation/loading, validation, PostgreSQL persistence
-│   ├── features/     # behavioral features and feature-store interface
-│   ├── models/       # training, seed model, prediction, SHAP explanation, registry
-│   ├── rules/        # fraud rule engine
-│   ├── simulator/    # transaction generator
-│   └── streaming/    # Kafka producer/consumer and Spark streaming sink
-├── sql/              # PostgreSQL schema and analytics queries
-├── tests/            # pytest coverage
-├── reports/          # system design and model documentation
-└── artifacts/        # model artifacts and registry metadata
+src/
+├── api/          FastAPI services
+├── dashboard/    Streamlit dashboards
+├── data/         Validation and persistence
+├── features/     Feature engineering
+├── models/       Training, inference, explainability
+├── rules/        Fraud rule engine
+├── simulator/    Transaction generation
+└── streaming/    Kafka and Spark streaming
 ```
 
-## Local Quickstart
+---
+
+## Machine Learning Approach
+
+Included models:
+
+* Logistic Regression baseline
+* Random Forest baseline
+* XGBoost production candidate
+
+Evaluation metrics:
+
+* Precision
+* Recall
+* F1 Score
+* ROC-AUC
+* PR-AUC
+
+The platform supports both real transaction datasets and synthetic transaction generation for local experimentation.
+
+Recommended dataset:
+
+```text
+data/raw/creditcard.csv
+```
+
+---
+
+## Alert Investigation Workflow
+
+```text
+OPEN
+  ↓
+UNDER_REVIEW
+  ↓
+CONFIRMED_FRAUD / FALSE_POSITIVE
+  ↓
+CLOSED
+```
+
+Status history is persisted for auditability and analyst review.
+
+---
+
+## API Example
+
+Score a transaction:
+
+```bash
+curl -X POST "http://localhost:8000/score-transaction?persist=true"
+```
+
+View alerts:
+
+```bash
+curl http://localhost:8000/alerts
+```
+
+Update alert status:
+
+```bash
+curl -X PATCH http://localhost:8000/alerts/{id}/status
+```
+
+---
+
+## Local Setup
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+
 make seed-model
 make api
 ```
 
-Open API docs:
+API documentation:
 
 ```text
 http://localhost:8000/docs
@@ -118,13 +199,15 @@ Run dashboard:
 make dashboard
 ```
 
-## Docker Quickstart
+---
+
+## Docker Deployment
 
 ```bash
 docker compose up --build
 ```
 
-Useful URLs:
+Available services:
 
 ```text
 API:       http://localhost:8000/docs
@@ -132,115 +215,57 @@ Dashboard: http://localhost:8501
 MLflow:    http://localhost:5000
 ```
 
-## API Examples
-
-Score and persist a transaction:
-
-```bash
-curl -X POST "http://localhost:8000/score-transaction?persist=true" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "transaction_id":"txn_demo_001",
-    "customer_id":"10001",
-    "amount":1250.00,
-    "transaction_hour":2,
-    "is_foreign_transaction":1,
-    "is_new_device":1,
-    "is_card_not_present":1,
-    "velocity_1h":6,
-    "merchant_risk_score":2,
-    "customer_avg_amount_30d":85.00,
-    "merchant_category":"electronics",
-    "merchant_country":"BR",
-    "device_type":"mobile"
-  }'
-```
-
-List alerts:
-
-```bash
-curl http://localhost:8000/alerts
-```
-
-Update alert status:
-
-```bash
-curl -X PATCH http://localhost:8000/alerts/1/status \
-  -H "Content-Type: application/json" \
-  -d '{"status":"UNDER_REVIEW","changed_by":"analyst","notes":"Reviewing customer history."}'
-```
-
-## Fraud Scoring
-
-```text
-Final Risk Score = 70% ML Fraud Probability + 30% Rule Score
-```
-
-Rule signals include high amount deviation, foreign country, new device, card-not-present, high-risk merchant, high transaction velocity, and late-night activity.
-
-## Model Strategy
-
-Included:
-
-- Logistic Regression baseline
-- Random Forest baseline
-- XGBoost production candidate
-- Demo seed Random Forest fallback for zero-friction app startup
-- MLflow experiment tracking with local registry fallback
-- PR-AUC, recall, precision, F1, ROC-AUC, and threshold tracking
-
-Recommended real dataset: Kaggle Credit Card Fraud Detection Dataset. Place it at:
-
-```text
-data/raw/creditcard.csv
-```
-
-The repo also works without external data by generating a demo dataset.
-
-## Alert Workflow
-
-```text
-OPEN → UNDER_REVIEW → CONFIRMED_FRAUD / FALSE_POSITIVE → CLOSED
-```
-
-Every status update is stored in `alert_status_history`.
+---
 
 ## Testing
+
+Run the test suite:
 
 ```bash
 pytest -q
 ```
 
-## Resume Bullets
+Current test coverage includes:
 
-```text
-FraudLens AI v2 — Real-Time Fraud Detection Platform | Python, Kafka, Spark, XGBoost, MLflow, PostgreSQL, Redis, SHAP, FastAPI, Streamlit, Docker
+* API endpoints
+* Feature engineering
+* Data validation
+* Fraud rules
+* Model prediction
+* Streaming pipeline validation
 
-• Built an end-to-end real-time fraud detection platform with Kafka ingestion, Spark Structured Streaming micro-batch scoring, PostgreSQL alert persistence, FastAPI services, and Streamlit investigation dashboards.
-• Trained and optimized fraud detection models for highly imbalanced transaction data using XGBoost, cost-sensitive learning, threshold tuning, and PR-AUC/recall-focused evaluation.
-• Designed a hybrid scoring engine combining ML probability, behavioral velocity rules, customer risk features, and SHAP-style explainability for investigator review.
-• Implemented MLflow experiment tracking, local model registry fallback, Dockerized services, PostgreSQL workflow tables, and automated tests for production-style ML delivery.
-```
+---
 
-## Scope Note
+## Key Engineering Highlights
 
-This is a portfolio-grade local system, not a PCI-compliant banking production system. Real production use requires stronger security, identity/access controls, audit logging, PII governance, drift monitoring, model risk management, and compliance review.
+* Built an end-to-end fraud detection platform spanning ingestion, scoring, persistence, investigation, and monitoring.
+* Combined machine learning predictions with business-rule scoring for explainable fraud decisions.
+* Implemented transaction simulation, alert lifecycle management, and customer risk profiling.
+* Added automated testing, Dockerized deployment, and CI workflows for reproducible development.
 
+---
 
-## Dashboard Demo
+## Resume Version
 
+**FraudLens AI — Real-Time Fraud Detection Platform | Python, Kafka, Spark, XGBoost, FastAPI, PostgreSQL, Streamlit, Docker**
 
+* Built an end-to-end fraud detection platform with transaction simulation, hybrid fraud scoring, alert management, and analyst dashboards.
+* Designed a machine learning and rule-based scoring framework to identify suspicious transactions and prioritize high-risk alerts.
+* Developed FastAPI services, Streamlit dashboards, automated testing, and Dockerized deployment workflows.
+* Implemented customer risk profiling, fraud investigation workflows, and explainable fraud scoring.
 
-The Streamlit dashboard provides a local fraud monitoring workflow with generated transactions, risk scoring, rule-based explanations, and trend visualization.
+---
 
+## Scope
 
+This repository is a portfolio-grade fraud analytics platform intended for learning, experimentation, and demonstration purposes.
 
-![FraudLens Dashboard](docs/screenshots/Dashboard.png)
+A production banking deployment would additionally require:
 
-
-
-![Risk Score Trend](docs/screenshots/Risk%20Score%20Trend.png)
-
-## System Architecture
-
-![FraudLens Architecture](docs/architecture.png)
+* Identity and access management
+* PII governance
+* Audit logging
+* Model monitoring and drift detection
+* Compliance and regulatory controls
+* Security hardening
+* High-availability infrastructure
