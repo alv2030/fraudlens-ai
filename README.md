@@ -1,5 +1,7 @@
 # FraudLens AI
 
+![CI](https://github.com/alv2030/fraudlens-ai/actions/workflows/ci.yml/badge.svg)
+
 Real-time fraud detection and investigation platform that combines machine learning predictions with rule-based risk signals to identify suspicious transactions and support fraud analyst workflows.
 
 Built with Python, XGBoost, FastAPI, Streamlit, Kafka, Spark Structured Streaming, PostgreSQL, Docker, and MLflow.
@@ -40,6 +42,7 @@ FraudLens AI demonstrates a hybrid approach that combines machine learning predi
 ### Highest Risk Customers
 
 ![Top Risk Customers](docs/screenshots/top-10-risk-customers.png)
+
 The Streamlit dashboard supports transaction monitoring, customer risk segmentation, alert investigation, and fraud analyst workflows.
 
 ---
