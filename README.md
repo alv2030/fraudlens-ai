@@ -25,7 +25,7 @@ FraudLens AI demonstrates a hybrid approach that combines machine learning predi
 
 ### Executive Overview
 
-![Executive Overview](docs/screenshots/dashboard.png)
+![dashboard](docs/screenshots/dashboard.png)
 
 ### Customer Risk Profile
 
