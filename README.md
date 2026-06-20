@@ -43,6 +43,24 @@ FraudLens AI demonstrates a hybrid approach that combines machine learning predi
 The Streamlit dashboard supports transaction monitoring, customer risk segmentation, alert investigation, and fraud analyst workflows.
 
 ---
+## Sample Results
+
+Generated Customer Segmentation:
+
+- High Risk: 6
+- Medium Risk: 2
+- Low Risk: 42
+
+Highest Observed Risk Score:
+73.13
+
+Example Risk Indicators:
+
+- Foreign Transaction
+- New Device
+- High Velocity Activity
+- High-Risk Merchant
+---
 
 ## System Architecture
 
@@ -245,7 +263,7 @@ Current test coverage includes:
 
 ---
 
-## Resume Version
+## Project Highlights
 
 **FraudLens AI — Real-Time Fraud Detection Platform | Python, Kafka, Spark, XGBoost, FastAPI, PostgreSQL, Streamlit, Docker**
 
